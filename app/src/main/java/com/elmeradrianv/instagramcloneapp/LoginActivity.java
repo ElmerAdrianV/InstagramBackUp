@@ -25,6 +25,11 @@ import com.parse.ParseUser;
         etUsername=findViewById(R.id.etUsername);
         etPassword=findViewById(R.id.etPassword);
         btnLogin=findViewById(R.id.btnLogin);
+        //To hide the action bar in appcompact activity
+        getSupportActionBar().hide();
+        if(ParseUser.getCurrentUser()!=null){
+            goMainActivity();
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +50,7 @@ import com.parse.ParseUser;
                     Log.e(TAG, "Issue with login",e );
                     return;
                 }
+
                 goMainActivity();
             }
         });
@@ -52,5 +58,7 @@ import com.parse.ParseUser;
      private void goMainActivity(){
          Intent intent = new Intent(this, MainActivity.class);
          startActivity(intent);
+         finish();
+
      }
 }

@@ -1,9 +1,10 @@
 package com.elmeradrianv.instagramcloneapp;
 
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.io.File;
-
+@ParseClassName("Post ")
 public class Post extends ParseObject {
     private String description;
     private File image;
