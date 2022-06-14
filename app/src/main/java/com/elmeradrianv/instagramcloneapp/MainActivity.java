@@ -7,21 +7,57 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
-    MenuItem btnLogout;
     ParseUser currentUser;
     public static final String TAG = MainActivity.class.getSimpleName();
+    private EditText etDescription;
+    private Button btnCaptureImage;
+    private ImageView ivPostImage;
+    private Button btnSubmit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getMenuInflater();
+        etDescription=findViewById(R.id.etDescription);
+        btnCaptureImage=findViewById(R.id.btnCaptureImage);
+        ivPostImage=findViewById(R.id.ivPostImage);
+        btnSubmit=findViewById(R.id.btnSubmit);
+        queryPost();
 
 
     }
+
+    private void queryPost() {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if(e!=null){
+                    Log.e(TAG, "done: something wrong with the query",e );
+                    return;
+                }
+                for (Post post:posts){
+                    Log.d(TAG, "post: "+post.getDescription()+" username:"+post.getUser().getUsername());
+                }
+            }
+        });
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_menu, menu);

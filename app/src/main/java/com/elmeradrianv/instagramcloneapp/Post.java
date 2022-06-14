@@ -1,29 +1,40 @@
 package com.elmeradrianv.instagramcloneapp;
 
+import com.parse.Parse;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.io.File;
-@ParseClassName("Post ")
+@ParseClassName("Post")
 public class Post extends ParseObject {
-    private String description;
-    private File image;
-    private String userId;
+    public static final String KEY_DESCRIPTION="description";
+    public static final String KEY_IMAGE="image";
+    public static final String KEY_USER="user";
 
-    public Post() {
-        super();
+    public String getDescription(){
+        return getString(KEY_DESCRIPTION);
+    }
+    public void setDescription(String description){
+         put(KEY_DESCRIPTION,description);
     }
 
-    public Post(String description, String userId) {
-        super();
-        this.description = description;
-        this.userId = userId;
+    public ParseFile getImage(){
+        return getParseFile(KEY_IMAGE);
+    }
+    public void setImage(ParseFile parseFile){
+        put(KEY_IMAGE,parseFile);
     }
 
-    public Post(String description, File image, String userId) {
-        super();
-        this.description = description;
-        this.image = image;
-        this.userId = userId;
+
+    public ParseUser getUser(){
+        return getParseUser(KEY_USER);
     }
+
+    public void setUser(ParseUser parseUser){
+        put(KEY_USER, parseUser);
+    }
+
+
 }
